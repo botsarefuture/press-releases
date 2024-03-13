@@ -3,19 +3,26 @@ from flask import Flask, jsonify, request
 import smtplib
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
+import json
 
 app = Flask(__name__)
 
-press_releases = []
+# Load config from config.json
+with open('config.json') as f:
+    config = json.load(f)
+
+# Extract config values
+github_username = config['github_username']
+github_repo = config['github_repo']
+github_filepath = config['github_filepath']
+smtp_server = config['smtp_server']
+smtp_port = config['smtp_port']
+sender_email = config['sender_email']
+sender_password = config['sender_password']
 
 def get_journalists_from_github():
     # GitHub repository details
-    github_username = 'your_github_username'
-    github_repo = 'your_github_repository'
-    filepath = 'journalists.txt'
-
-    # GitHub API request
-    url = f'https://api.github.com/repos/{github_username}/{github_repo}/contents/{filepath}'
+    url = f'https://api.github.com/repos/{github_username}/{github_repo}/contents/{github_filepath}'
     response = requests.get(url)
     data = response.json()
 
@@ -25,6 +32,10 @@ def get_journalists_from_github():
 
     return journalists
 
+def save_press_releases_to_file(press_releases):
+    with open('press_releases.json', 'w') as f:
+        json.dump(press_releases, f, indent=4)
+
 @app.route('/api/press-releases', methods=['GET'])
 def get_press_releases():
     return jsonify(press_releases)
@@ -33,6 +44,9 @@ def get_press_releases():
 def new_press_release():
     data = request.json
     press_releases.append(data)
+    
+    # Save press releases to file
+    save_press_releases_to_file(press_releases)
 
     # Send email to all journalists
     send_email_to_journalists(data['title'], data['content'])
@@ -40,12 +54,6 @@ def new_press_release():
     return jsonify({"message": "Press release added successfully"})
 
 def send_email_to_journalists(title, content):
-    # SMTP server configuration
-    smtp_server = 'your_smtp_server'
-    smtp_port = 587
-    sender_email = 'your_email@example.com'
-    password = 'your_password'
-
     # Email content
     subject = f'New Press Release: {title}'
     body = content
@@ -63,7 +71,7 @@ def send_email_to_journalists(title, content):
         msg['To'] = journalist_email
         with smtplib.SMTP(smtp_server, smtp_port) as server:
             server.starttls()
-            server.login(sender_email, password)
+            server.login(sender_email, sender_password)
             server.sendmail(sender_email, journalist_email, msg.as_string())
 
 if __name__ == '__main__':
