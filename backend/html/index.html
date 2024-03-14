@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Press Releases</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <style>
+        /* Additional styles for press releases */
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            font-family: Arial, sans-serif;
+        }
+
+        .press-release {
+            width: 300px;
+            height: auto;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            overflow: hidden;
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .press-release:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .press-release h2 {
+            font-size: 20px;
+            margin: 15px;
+            color: #333;
+        }
+
+        .press-release p {
+            font-size: 16px;
+            margin: 0 15px 15px;
+            color: #666;
+        }
+
+        .press-release a {
+            text-decoration: none; /* Remove underline from link */
+            color: inherit; /* Inherit color from parent */
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Press Releases</h1>
+        <div class="carousel-container" id="pressReleases">
+            {% if press_releases %}
+            {% for release in press_releases %}
+            <a href="{{ url_for('release', id=loop.index0) }}" class="press-release">
+                <div>
+                    <h2>{{ release.title }}</h2>
+                    <p>{{ release.content }}</p>
+                </div>
+            </a>
+            {% endfor %}
+            {% else %}
+            <p>No press releases available.</p>
+            {% endif %}
+        </div>
+    </div>
+</body>
+
+</html>

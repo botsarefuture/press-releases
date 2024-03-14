@@ -1,11 +1,30 @@
-from flask import Flask, jsonify, request, session, redirect, url_for
+from flask import Flask, jsonify, request, session, redirect, url_for, render_template
 import smtplib
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 import json
+import requests
 
-app = Flask(__name__)
+
+from flask import Flask, jsonify, request, session, redirect, url_for
+from flask_cors import CORS # Import CORS module
+
+from functions import load_releases
+
+app = Flask(__name__, template_folder="html")
 app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
+
+# Enable CORS for all domains
+CORS(app, origins='*')
+
+press_releases = []
+press_releases = load_releases()
+
+to_replace = [("Ã¤", "ä"), ("Ã¶", "ö"), ("Ã„", "Ä"), ("Ã–", "Ö")]
+
+for press_release in press_releases:
+    for to_repla in to_replace:
+        press_release["content"] = press_release["content"].replace(to_repla[0], to_repla[1])
 
 # Sample user data for demonstration purposes
 users = {
@@ -25,6 +44,18 @@ smtp_server = config['smtp_server']
 smtp_port = config['smtp_port']
 sender_email = config['sender_email']
 sender_password = config['sender_password']
+
+def generate_example_press_releases(num_releases=5):
+    examples = []
+    for i in range(num_releases):
+        example = {
+            "title": f"Example Press Release {i+1}",
+            "content": f"This is an example press release {i+1}. Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+        }
+        examples.append(example)
+    return examples
+
+#press_releases = generate_example_press_releases()
 
 def get_journalists_from_github():
     # GitHub repository details
@@ -79,6 +110,38 @@ def new_press_release():
 
     return jsonify({"message": "Press release added successfully"})
 
+@app.route("/")
+def index():
+    #with open("../html/index.html") as f:
+        #return f.read()
+    return render_template("index.html", press_releases=press_releases)
+
+@app.route("/<name>")
+def ro(name):
+    with open(f"html/{name}") as f:
+        return f.read()
+    
+@app.route("/releases/<id>")
+def release(id):
+    release = press_releases[int(id)]
+    return render_template("release.html", release=release)
+
+from flask import send_file
+
+@app.route("/static/<path:path>")
+def static_file(path):
+    # Determine content type based on file extension
+    if path.endswith('.css'):
+        content_type = 'text/css'
+    elif path.endswith('.js'):
+        content_type = 'text/javascript'
+    else:
+        content_type = 'text/plain'  # Default to plain text if content type is unknown
+
+    # Return the static file with appropriate content type
+    return send_file(f"static/{path}", mimetype=content_type)
+
+
 def send_email_to_journalists(title, content):
     # Email content
     subject = f'New Press Release: {title}'
@@ -101,4 +164,4 @@ def send_email_to_journalists(title, content):
             server.sendmail(sender_email, journalist_email, msg.as_string())
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run()

@@ -1,0 +1,56 @@
+/* Reset default margin and padding */
+body, h1, h2, p, div {
+    margin: 0;
+    padding: 0;
+}
+
+/* Style for container */
+.container {
+    width: 100%;
+    margin: 0 auto;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+}
+
+/* Style for page title */
+h1 {
+    font-size: 36px;
+    text-align: center;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+/* Style for press releases container */
+#pressReleases {
+    overflow-x: auto; /* Enable horizontal scrolling */
+}
+
+/* Style for press release */
+.press-release {
+    display: inline-block; /* Display press releases in a row */
+    margin-right: 20px; /* Space between press releases */
+    width: 300px; /* Width of each press release box */
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Style for press release title */
+.press-release h2 {
+    font-size: 24px;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+/* Style for press release content */
+.press-release p {
+    font-size: 16px;
+    color: #666;
+}
+
+/* Style for message when no press releases available */
+.no-releases-message {
+    font-style: italic;
+    color: #888;
+}
