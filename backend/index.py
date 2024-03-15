@@ -71,7 +71,7 @@ def get_journalists_from_github():
 
 def save_press_releases_to_file(press_releases):
     save_releases(press_releases)
-    raise PendingDeprecationWarning("This will be depraced in next version. Use save_releases() instead.")
+    #raise PendingDeprecationWarning("This will be depraced in next version. Use save_releases() instead.")
 
 @app.route('/api/login', methods=['POST'])
 def login():

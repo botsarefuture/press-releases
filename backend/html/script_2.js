@@ -6,7 +6,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         // Get release details from form inputs
         const title = document.getElementById("releaseTitle").value;
-        const content = document.getElementById("releaseContent").value;
+        const content = CKEDITOR.instances["releaseContent"].getData();
 
         // Send POST request to add new release
         fetch("/api/new-release", {
