@@ -59,7 +59,7 @@
             <a href="{{ url_for('release', id=loop.index0) }}" class="press-release">
                 <div>
                     <h2>{{ release.title }}</h2>
-                    <p>{{ release.content }}</p>
+                    <p>{{ release.content | safe }}</p>
                 </div>
             </a>
             {% endfor %}

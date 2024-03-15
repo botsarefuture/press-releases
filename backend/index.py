@@ -127,7 +127,10 @@ def login_v2():
 
 @app.route("/new_release/")
 def new():
+    if 'username' not in session:
+        return redirect(url_for('login_v2'))
     return render_template("create_release.html")
+
 
 @app.route("/<name>")
 def ro(name):
