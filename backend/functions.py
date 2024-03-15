@@ -29,7 +29,7 @@ def load_json_with_escape(filename):
 
 def load_releases() -> dict:
     try:
-        with open("releases.json", "r") as f:
+        with open("releases.json", "r", encoding="utf-8") as f:
             releases = json.load(f)
         
         # Unescape HTML content

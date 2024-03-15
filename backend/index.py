@@ -23,14 +23,9 @@ def load_config():
 config = load_config()
 
 to_replace = {'Ã¤': 'ä', 'Ã¶': 'ö', 'Ã„': 'Ä', 'Ã–': 'Ö'}
-def replace_characters(s):
-    for item in to_replace:
-        s.replace(item[0], item[1])
-    
-    return s
-        
 for press_release in press_releases:
-    press_release["content"] = replace_characters(press_release["content"])
+    for old_str, new_str in to_replace.items():
+        press_release["content"] = str(press_release["content"]).replace(old_str, new_str)
 
 users = {
     "user1": {"password": "password1", "email": "user1@example.com"},
