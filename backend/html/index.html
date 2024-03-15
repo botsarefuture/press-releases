@@ -16,7 +16,8 @@
         }
 
         .press-release {
-            width: 300px;
+            width: 100%;
+            max-width: 300px; /* Set maximum width */
             height: auto;
             margin-bottom: 20px;
             border-radius: 8px;
@@ -24,6 +25,12 @@
             background-color: #fff;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             transition: transform 0.3s ease;
+            display: inline-block; /* Ensure each box is on the same line */
+            margin-right: 20px; /* Add margin between boxes */
+        }
+
+        .press-release:last-child {
+            margin-right: 0; /* Remove margin for the last box */
         }
 
         .press-release:hover {
@@ -59,7 +66,7 @@
             <a href="{{ url_for('release', id=loop.index0) }}" class="press-release">
                 <div>
                     <h2>{{ release.title }}</h2>
-                    <p>{{ release.content | safe }}</p>
+                    <p>{{ release.review | safe }}</p>
                 </div>
             </a>
             {% endfor %}

@@ -114,6 +114,8 @@ def new_press_release():
 def index():
     #with open("../html/index.html") as f:
         #return f.read()
+    for item in press_releases:
+        item["review"] = str(item["content"])[0:50]
     return render_template("index.html", press_releases=press_releases)
 
 @app.route("/releases/<id>")
