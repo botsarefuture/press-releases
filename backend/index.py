@@ -1,42 +1,42 @@
-from flask import Flask, jsonify, request, session, redirect, url_for, render_template
+from flask import Flask, jsonify, request, session, redirect, url_for, render_template, send_file
+from flask_cors import CORS
 import smtplib
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 import json
 import requests
-
-
-from flask import Flask, jsonify, request, session, redirect, url_for
-from flask_cors import CORS # Import CORS module
-
 from functions import load_releases, save_releases
+from datetime import datetime
+
+
 
 app = Flask(__name__, template_folder="html")
 app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
-
-# Enable CORS for all domains
 CORS(app, origins='*')
 
-press_releases = []
 press_releases = load_releases()
 
-to_replace = [("Ã¤", "ä"), ("Ã¶", "ö"), ("Ã„", "Ä"), ("Ã–", "Ö")]
+def load_config():
+    with open('config.json') as f:
+        return json.load(f)
 
+config = load_config()
+
+to_replace = {'Ã¤': 'ä', 'Ã¶': 'ö', 'Ã„': 'Ä', 'Ã–': 'Ö'}
+def replace_characters(s):
+    for item in to_replace:
+        s.replace(item[0], item[1])
+    
+    return s
+        
 for press_release in press_releases:
-    for to_repla in to_replace:
-        press_release["content"] = press_release["content"].replace(to_repla[0], to_repla[1])
+    press_release["content"] = replace_characters(press_release["content"])
 
-# Sample user data for demonstration purposes
 users = {
     "user1": {"password": "password1", "email": "user1@example.com"},
     "user2": {"password": "password2", "email": "user2@example.com"}
 }
 
-# Load config from config.json
-with open('config.json') as f:
-    config = json.load(f)
-
-# Extract config values
 github_username = config['github_username']
 github_repo = config['github_repo']
 github_filepath = config['github_filepath']
@@ -45,33 +45,24 @@ smtp_port = config['smtp_port']
 sender_email = config['sender_email']
 sender_password = config['sender_password']
 
-def generate_example_press_releases(num_releases=5):
-    examples = []
-    for i in range(num_releases):
-        example = {
-            "title": f"Example Press Release {i+1}",
-            "content": f"This is an example press release {i+1}. Lorem ipsum dolor sit amet, consectetur adipiscing elit."
-        }
-        examples.append(example)
-    return examples
-
-#press_releases = generate_example_press_releases()
-
 def get_journalists_from_github():
-    # GitHub repository details
-    url = f'https://api.github.com/repos/{github_username}/{github_repo}/contents/{github_filepath}'
-    response = requests.get(url)
-    data = response.json()
-
-    # Decode content from Base64 and split into list of emails
-    content = data['content']
-    journalists = content.decode('base64').split('\n')
-
-    return journalists
+    try:
+        url = f'https://api.github.com/repos/{github_username}/{github_repo}/contents/{github_filepath}'
+        response = requests.get(url)
+        response.raise_for_status()  # Raise an exception for non-200 responses
+        data = response.json()
+        content = data.get('content', '')
+        journalists = content.decode('base64').split('\n')
+        return journalists
+    except Exception as e:
+        print(f"Error fetching journalists from GitHub: {e}")
+        return []
 
 def save_press_releases_to_file(press_releases):
-    save_releases(press_releases)
-    #raise PendingDeprecationWarning("This will be depraced in next version. Use save_releases() instead.")
+    try:
+        save_releases(press_releases)
+    except Exception as e:
+        print(f"Error saving press releases to file: {e}")
 
 @app.route('/api/login', methods=['POST'])
 def login():
@@ -100,20 +91,22 @@ def new_press_release():
         return jsonify({"message": "Unauthorized"}), 401
 
     data = request.json
+
+    # Get the current date and time
+    current_datetime = datetime.now()
+
+    # Format the date and time as DD.MM.YYYY HH:MM
+    publish_date = current_datetime.strftime('%d.%m.%Y %H:%M')
+
+    # Set the publish_date in the data dictionary
+    data["publish_date"] = publish_date
     press_releases.append(data)
-
-    # Save press releases to file
     save_press_releases_to_file(press_releases)
-
-    # Send email to all journalists
-    #send_email_to_journalists(data['title'], data['content'])
 
     return jsonify({"message": "Press release added successfully"})
 
 @app.route("/")
 def index():
-    #with open("../html/index.html") as f:
-        #return f.read()
     for item in press_releases:
         item["review"] = str(item["content"])[0:50]
     return render_template("index.html", press_releases=press_releases)
@@ -133,49 +126,20 @@ def new():
         return redirect(url_for('login_v2'))
     return render_template("create_release.html")
 
-
 @app.route("/<name>")
 def ro(name):
-    with open(f"html/{name}") as f:
-        return f.read()
-    
-
-from flask import send_file
+    try:
+        with open(f"html/{name}") as f:
+            return f.read()
+    except FileNotFoundError:
+        return "File not found", 404
 
 @app.route("/static/<path:path>")
 def static_file(path):
-    # Determine content type based on file extension
-    if path.endswith('.css'):
-        content_type = 'text/css'
-    elif path.endswith('.js'):
-        content_type = 'text/javascript'
-    else:
-        content_type = 'text/plain'  # Default to plain text if content type is unknown
-
-    # Return the static file with appropriate content type
+    content_type = 'text/plain'  # Default to plain text if content type is unknown
+    if path.endswith(('.css', '.js')):
+        content_type = f'text/{path.rsplit(".", 1)[1]}'
     return send_file(f"static/{path}", mimetype=content_type)
-
-
-def send_email_to_journalists(title, content):
-    # Email content
-    subject = f'New Press Release: {title}'
-    body = content
-
-    msg = MIMEMultipart()
-    msg['From'] = sender_email
-    msg['Subject'] = subject
-    msg.attach(MIMEText(body, 'plain'))
-
-    # Fetch list of journalists from GitHub
-    journalists = get_journalists_from_github()
-
-    # Send email to each journalist
-    for journalist_email in journalists:
-        msg['To'] = journalist_email
-        with smtplib.SMTP(smtp_server, smtp_port) as server:
-            server.starttls()
-            server.login(sender_email, sender_password)
-            server.sendmail(sender_email, journalist_email, msg.as_string())
 
 if __name__ == '__main__':
     app.run()

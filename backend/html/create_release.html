@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Create Press Release</title>
+    <title>Lähetä lehdistötiedote</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
     <!-- Include CKEditor script -->
     <script src="https://cdn.ckeditor.com/ckeditor5/41.1.0/classic/ckeditor.js"></script>
@@ -62,41 +62,39 @@
 </head>
 <body>
     <div class="container">
-        <h1>Create Press Release</h1>
+        <h1>Lähetä lehdistötiedote</h1>
         <form id="createReleaseForm">
             <div class="form-group">
-                <label for="releaseTitle">Title</label>
-                <input type="text" id="releaseTitle" placeholder="Title" required>
+                <label for="releaseTitle">Otsikko</label>
+                <input type="text" id="releaseTitle" placeholder="Otsikko" required>
             </div>
             <div class="form-group">
-                <label for="releaseContent">Content</label>
+                <label for="releaseContent">Sisältö</label>
                 <!-- Replace textarea with div for CKEditor integration -->
                 <div id="releaseContent" contenteditable="true"></div>
             </div>
             <div class="form-group">
-                <label for="organization">Organization</label>
-                <input type="text" id="organization" placeholder="Organization">
+                <label for="organization">Julkaisija (organisaatio)</label>
+                <input type="text" id="organization" placeholder="Organisaatio">
             </div>
             <div class="form-group">
-                <label for="contactName">Contact Name</label>
-                <input type="text" id="contactName" placeholder="Contact Name">
+                <label for="contactName">Yhteyshenkilö tiedotusvälineille</label>
+                <input type="text" id="contactName" placeholder="Yhteyshenkilön nimi">
             </div>
             <div class="form-group">
-                <label for="contactEmail">Contact Email</label>
-                <input type="email" id="contactEmail" placeholder="Contact Email">
+                <label for="contactEmail">Yhteydenottosähköposti</label>
+                <input type="email" id="contactEmail" placeholder="Sähköposti">
             </div>
             <div class="form-group">
-                <label for="contactPhone">Contact Phone</label>
-                <input type="tel" id="contactPhone" placeholder="Contact Phone">
+                <label for="contactPhone">Yhteydenottopuhelinnumero</label>
+                <input type="tel" id="contactPhone" placeholder="Puhelinnumero">
             </div>
             <div class="form-group">
-                <label>Status</label><br>
-                <input type="radio" id="immediate" name="status" value="immediate">
+                <label>Tila</label><br>
+                <input checked type="radio" id="immediate" name="status" value="Heti julkaistavissa">
                 <label for="immediate">Heti julkaistavissa</label>
-                <input type="radio" id="notImmediate" name="status" value="notImmediate" checked>
-                <label for="notImmediate">Vasta jolloinkin</label>
             </div>
-            <button type="submit">Add Release</button>
+            <button type="submit">Lähetä tiedote</button>
         </form>
     </div>
 
@@ -133,7 +131,7 @@
                 })
                     .then(response => {
                         if (response.ok) {
-                            alert("Press release added successfully.");
+                            alert("Lehdistötiedote lisätty onnistuneesti.");
                             // Clear form inputs
                             document.getElementById("releaseTitle").value = "";
                             document.getElementById("releaseContent").innerHTML = "";
@@ -143,7 +141,7 @@
                             document.getElementById("contactPhone").value = "";
                             document.getElementById("immediate").checked = true;
                         } else {
-                            alert("Error adding press release. Please try again.");
+                            alert("Virhe lehdistötiedotteen lisäämisessä. Yritä uudelleen.");
                         }
                     })
                     .catch(error => console.error('Error adding new release:', error));

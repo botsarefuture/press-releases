@@ -67,8 +67,32 @@
 <body>
     <div class="container">
         <h1>{{ release.title }}</h1>
+        <p><strong>Julkaistu:</strong> {{ release.publish_date }} | {{ release.organization }}</p>
         {{ release.content | safe }}
-        <!-- Add any additional information here -->
+
+        <h2>Lisätiedot:</h2>
+        <table>
+            <tr>
+                <th>Julkaisija (organisaatio)</th>
+                <td>{{ release.organization }}</td>
+            </tr>
+            <tr>
+                <th>Yhteyshenkilö tiedotusvälineille</th>
+                <td>{{ release.contactName }}</td>
+            </tr>
+            <tr>
+                <th>Sähköposti</th>
+                <td>{{ release.contactEmail }}</td>
+            </tr>
+            <tr>
+                <th>Puhelinnumero</th>
+                <td>{{ release.contactPhone }}</td>
+            </tr>
+            <tr>
+                <th>Julkaisutila</th>
+                <td>{{ release.status }}</td>
+            </tr>
+        </table>
     </div>
 </body>
 </html>
