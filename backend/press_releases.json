@@ -1,0 +1,30 @@
+[
+    {
+        "content": "This is an example press release 1. Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+        "title": "Example Press Release 1"
+    },
+    {
+        "content": "This is an example press release 2. Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+        "title": "Example Press Release 2"
+    },
+    {
+        "content": "This is an example press release 3. Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+        "title": "Example Press Release 3"
+    },
+    {
+        "content": "This is an example press release 4. Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+        "title": "Example Press Release 4"
+    },
+    {
+        "content": "This is an example press release 5. Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+        "title": "Example Press Release 5"
+    },
+    {
+        "content": "<p><strong>Julkaistu: </strong>4.3.2024 klo 15:00 | Mielenterveys kuuluu kaikille-ty\u00f6ryhm\u00e4</p>\n  \n      <h2>INGRESSI:</h2>\n      <p>Mielenterveyskriisi on saavuttanut h\u00e4lytt\u00e4v\u00e4t mittasuhteet Suomessa, ja kansalaiset nousevat yhteen osoittaakseen tukensa mielenterveyden puolesta. Mielenterveys kuuluu kaikille! -mielenosoitus j\u00e4rjestet\u00e4\u00e4n Helsingiss\u00e4 9. maaliskuuta 2024.</p>\n  \n      <h2>LEIP\u00c4TEKSTI:</h2>\n      <p>Mielenosoituksella vaaditaan investointeja ja konkreettisia toimia mielenterveyskriisin ratkaisemiseksi. Tapahtuma alkaa kello 13:00 Senaatintorilla, josta marssitaan kello 14:00 alkaen Eduskuntatalolle.</p>\n      \n      <p>Tapahtumaa tukevat monet keskeiset mielenterveysalan toimijat kuten: MIELI Suomen mielenterveys ry, Mielenterveyden keskusliitto, Nyyti ry, Sekasin Kollektiivi ja Nuorten mielenterveysseura Yeesi ry.</p>\n  \n      <h2>Puhujina / ohjelma:</h2>\n      <table>\n        <thead>\n          <tr>\n            <th>Aika</th>\n            <th>Paikka</th>\n            <th>Aktiviteetti</th>\n          </tr>\n        </thead>\n        <tbody>\n          <tr>\n            <td>13:00 - 14:00</td>\n            <td>Senaatintori</td>\n            <td>Kokoontuminen</td>\n          </tr>\n          <!-- Lis\u00e4\u00e4 muut ohjelmaosiot t\u00e4h\u00e4n samalla tavalla -->\n        </tbody>\n      </table>\n  \n      <p>Mielenosoituksen j\u00e4rjest\u00e4j\u00e4t vaativat hallitukselta mittavia investointeja hyvinvointiin sek\u00e4 konkreettisia poliittisia toimia mielenterveysongelmien ratkaisemiseksi. Tule osoittamaan tukesi ja vaikuttamaan yhteisen hyvinvointimme puolesta!</p>\n  \n      <h2>L\u00c4HTEET:</h2>\n      <ul>\n        <li><a href='https://mieli.fi/blogit/itsemurhaa-yrittaneiden-hoito-on-varmistettava/' target='_blank'>[1] mieli.fi</a></li>\n        <!-- Lis\u00e4\u00e4 muut l\u00e4hteet t\u00e4h\u00e4n samalla tavalla -->\n      </ul>\n  \n      <h2>Lis\u00e4tietoja ja yhteydenotot:</h2>\n      <p>Email: <a href='/cdn-cgi/l/email-protection' class='__cf_email__' data-cfemail='b8d5d1ddd4ddd6ccddcaceddc1cbd3d9d1d3d1d4d4ddf8c8cad7ccd7d696d5dd'>[email protected]</a></p>\n      <p>Verkkosivusto: <a href='https://mielenterveyskaikille.fi' target='_blank'>mielenterveyskaikille.fi</a></p>\n      <p>Twitter: <a href='https://twitter.com/MTkaikille' target='_blank'>@MTkaikille</a></p>\n      <p>Instagram: <a href='https://instagram.com/mielenterveyskaikille' target='_blank'>@mielenterveyskaikille</a></p>\n      <p>Facebook: <a href='https://facebook.com/mielenterveyskaikille' target='_blank'>fb.com/mielenterveyskaikille</a></p>",
+        "title": "TIEDOTE: Mielenterveys kuuluu kaikille! - Mielenosoitus 9.3.2024"
+    },
+    {
+        "title": "sss",
+        "content": "sss"
+    }
+]

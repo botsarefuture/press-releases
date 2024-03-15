@@ -9,7 +9,7 @@ import requests
 from flask import Flask, jsonify, request, session, redirect, url_for
 from flask_cors import CORS # Import CORS module
 
-from functions import load_releases
+from functions import load_releases, save_releases
 
 app = Flask(__name__, template_folder="html")
 app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
@@ -70,8 +70,8 @@ def get_journalists_from_github():
     return journalists
 
 def save_press_releases_to_file(press_releases):
-    with open('press_releases.json', 'w') as f:
-        json.dump(press_releases, f, indent=4)
+    save_releases(press_releases)
+    raise PendingDeprecationWarning("This will be depraced in next version. Use save_releases() instead.")
 
 @app.route('/api/login', methods=['POST'])
 def login():
@@ -106,7 +106,7 @@ def new_press_release():
     save_press_releases_to_file(press_releases)
 
     # Send email to all journalists
-    send_email_to_journalists(data['title'], data['content'])
+    #send_email_to_journalists(data['title'], data['content'])
 
     return jsonify({"message": "Press release added successfully"})
 
@@ -116,15 +116,24 @@ def index():
         #return f.read()
     return render_template("index.html", press_releases=press_releases)
 
+@app.route("/releases/<id>")
+def release(id):
+    release = press_releases[int(id)]
+    return render_template("release.html", release=release)
+
+@app.route("/login/")
+def login_v2():
+    return render_template("login.html")
+
+@app.route("/new_release/")
+def new():
+    return render_template("create_release.html")
+
 @app.route("/<name>")
 def ro(name):
     with open(f"html/{name}") as f:
         return f.read()
     
-@app.route("/releases/<id>")
-def release(id):
-    release = press_releases[int(id)]
-    return render_template("release.html", release=release)
 
 from flask import send_file
 
