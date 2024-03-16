@@ -2,6 +2,6 @@
     "smtp_server": "your_smtp_server",
     "smtp_port": 587,
     "sender_email": "your_email@example.com",
-    "sender_password": "your_password",
+    "sender_password": "sG25h73pd.",
     "mongodb_uri": ""
 }

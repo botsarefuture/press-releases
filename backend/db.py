@@ -16,9 +16,12 @@ class PressReleaseDatabase:
 
     def save_press_release(self, data):
         try:
-            self.press_releases_collection.insert_one(data)
+            _id = self.press_releases_collection.insert_one(data)
         except Exception as e:
             print(f"Error saving press release to database: {e}")
+        
+        finally:
+            return str(_id)
         
     def get_press_release(self, id):
         press_release = self.press_releases_collection.find_one({"_id": ObjectId(id)})

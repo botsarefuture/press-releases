@@ -2,10 +2,20 @@ from flask import Blueprint, jsonify, request, session
 from functions import load_releases, save_releases
 from datetime import datetime
 from db import PressReleaseDatabase
+from emailer import send_email
 
 api = Blueprint('api', __name__)
 
 PRDB = PressReleaseDatabase()
+
+with open("press.txt") as f:
+    pressers = f.read()
+    pressers = pressers.replace("\n", "")
+    pressers = pressers.split(",")
+
+# SAFETY MECHANISM
+
+pressers = ["vuoreol@gmail.com"]
 
 @api.route('/login', methods=['POST'])
 def login():
@@ -43,7 +53,9 @@ def new_press_release():
 
     # Set the publish_date in the data dictionary
     data["publish_date"] = publish_date
-    PRDB.save_press_release(data)
+    _id = PRDB.save_press_release(data)
+    
+    send_email("Lehdistötiedotteiden jakelupalvelu", pressers, data.get("title"), data.get("publish_date"), _id)
 
     return jsonify({"message": "Press release added successfully"})
 
