@@ -1,6 +1,0 @@
-{"mongodb_uri": "mongodb://95.216.148.93:27017/",
-    "smtp_server": "mail.luova.club",
-    "smtp_port": 587,
-    "sender_email": "no-reply@luova.club",
-    "sender_password": "sG25h73pd."
-}
