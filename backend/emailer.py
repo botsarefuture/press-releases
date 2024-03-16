@@ -70,13 +70,3 @@ def send_email(sender_name, receiver_emails, release_title, publish_date, releas
         for receiver_email in receiver_emails:
             message["To"] = receiver_email
             server.sendmail(sender_email, receiver_email, message.as_string())
-
-
-# Example usage
-sender_name = "Verso"
-receiver_emails = ["email1@example.com", "email2@example.com"]  # Add all recipient emails here
-release_title = "Titteli"
-publish_date = "3.6."
-release_id = "12345"
-
-send_email(sender_name, receiver_emails, release_title, publish_date, release_id)

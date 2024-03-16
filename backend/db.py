@@ -16,7 +16,7 @@ class PressReleaseDatabase:
 
     def save_press_release(self, data):
         try:
-            _id = self.press_releases_collection.insert_one(data)
+            _id = self.press_releases_collection.insert_one(data).inserted_id
         except Exception as e:
             print(f"Error saving press release to database: {e}")
         
