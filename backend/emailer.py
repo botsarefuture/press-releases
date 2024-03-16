@@ -71,4 +71,5 @@ def send_email(sender_name, receiver_emails, release_title, publish_date, releas
             message["To"] = receiver_email
             server.sendmail(sender_email, receiver_email, message.as_string())
             
-send_email("12", ["vuoreol@gmail.com", "postmaster@luova.club"], "FUCK U", "EILEN", "none")
+if __name__ == '__main__':
+  send_email("12", ["vuoreol@gmail.com", "postmaster@luova.club"], "FUCK U", "EILEN", "none")
