@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Press Releases</title>
+    <title>Lehdistötiedotteet</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
     <style>
         /* Additional styles for press releases */
@@ -59,11 +59,11 @@
 
 <body>
     <div class="container">
-        <h1>Press Releases</h1>
+        <h1>Lehdistötiedotteet</h1>
         <div class="carousel-container" id="pressReleases">
             {% if press_releases %}
             {% for release in press_releases %}
-            <a href="{{ url_for('release', id=loop.index0) }}" class="press-release">
+            <a href="{{ url_for('release', id= release._id ) }}" class="press-release">
                 <div>
                     <h2>{{ release.title }}</h2>
                     <p>{{ release.review | safe }}</p>
