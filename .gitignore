@@ -2,3 +2,5 @@ config.json
 _pycache**
 config.yaml
 config.yaml
+
+.venv/
