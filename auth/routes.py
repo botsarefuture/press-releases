@@ -117,12 +117,12 @@ def login():
 
         if user.confirmed:
             login_user(user)
-            return redirect(url_for("index"))
+            return redirect(url_for("main.index"))
 
         else:
             flash("Sähköpostiosoitettasi ei ole vahvistettu. Tarkista sähköpostisi.")
             verify_emailer(user.email, username)
-            return redirect(url_for("index"))
+            return redirect(url_for("main.index"))
 
     return render_template("login.html")
 

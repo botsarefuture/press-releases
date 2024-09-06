@@ -49,10 +49,8 @@ def new():
     """
     Page to create a new press release.
     """
-    if "username" not in session:
-        return redirect(url_for("main.login_v2"))
-
     if request.method == "POST":
+        print(request.form.to_dict())
         title = request.form.get("title")
         content = request.form.get("content")
         organization = request.form.get("organization")

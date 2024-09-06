@@ -1,24 +1,112 @@
 {% extends "base.html" %}
 
-{% block title %}Home - Lehdistötiedotteet{% endblock %}
+{% block title %}Etusivu - Lehdistötiedotteet{% endblock %}
 
 {% block content %}
-<h2>Welcome to the Press Release Portal</h2>
-<p>Here you can find the latest press releases and updates.</p>
+<div class="hero">
+    <h2>Tervetuloa pressi -palveluun</h2>
+    <p>Pidä itsesi ajan tasalla uusimmista lehdistötiedotteista ja uutisista organisaatiostamme.</p>
+</div>
 
-<section>
-    <h3>Latest Press Releases</h3>
+<section class="press-releases">
+    <h3>Uusimmat lehdistötiedotteet</h3>
     {% if press_releases %}
-        <ul>
+        <div class="release-list">
             {% for release in press_releases %}
-                <li>
-                    <h4><a href="{{ url_for('release', id=release['_id']) }}">{{ release['title'] }}</a></h4>
-                    <p>{{ release['review'] }} <a href="{{ url_for('release', id=release['_id']) }}">Read more</a></p>
-                </li>
+                <div class="release-item">
+                    <h4><a href="{{ url_for('main.release', id=release['_id']) }}">{{ release['title'] }}</a></h4>
+                    <p class="summary">{{ release['review'] | safe }}</p>
+                    <a class="read-more" href="{{ url_for('main.release', id=release['_id']) }}">Lue lisää</a>
+                </div>
             {% endfor %}
-        </ul>
+        </div>
     {% else %}
-        <p>No press releases available at the moment.</p>
+        <p class="no-releases">Lehdistötiedotteita ei ole tällä hetkellä saatavilla.</p>
     {% endif %}
 </section>
+
+{% endblock %}
+
+{% block additional_styles %}
+<style>
+    .hero {
+        background: #007bff; /* Sininen tausta hero-osioon */
+        color: #fff; /* Valkoinen teksti */
+        padding: 40px 20px;
+        text-align: center;
+        border-radius: 8px;
+        margin-bottom: 30px;
+    }
+
+    .hero h2 {
+        font-size: 2.5em;
+        margin-bottom: 10px;
+    }
+
+    .hero p {
+        font-size: 1.2em;
+    }
+
+    .press-releases {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+    }
+
+    .press-releases h3 {
+        font-size: 2em;
+        margin-bottom: 20px;
+        color: #333;
+    }
+
+    .release-list {
+        list-style: none;
+        padding: 0;
+    }
+
+    .release-item {
+        background: #fff;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 15px;
+        margin-bottom: 15px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .release-item h4 {
+        font-size: 1.5em;
+        margin: 0;
+    }
+
+    .release-item h4 a {
+        color: #007bff;
+        text-decoration: none;
+    }
+
+    .release-item h4 a:hover {
+        text-decoration: underline;
+    }
+
+    .release-item .summary {
+        font-size: 1em;
+        color: #666;
+    }
+
+    .read-more {
+        display: inline-block;
+        margin-top: 10px;
+        color: #007bff;
+        text-decoration: none;
+        font-weight: bold;
+    }
+
+    .read-more:hover {
+        text-decoration: underline;
+    }
+
+    .no-releases {
+        font-style: italic;
+        color: #999;
+    }
+</style>
 {% endblock %}

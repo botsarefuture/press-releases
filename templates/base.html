@@ -1,26 +1,79 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Lehdistötiedotteet{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
     <style>
         body {
-            background-color: #f5f5f5; /* Light gray background */
-            color: #333; /* Dark text color */
-            font-family: Arial, sans-serif; /* Standard font */
+            background-color: #f5f5f5;
+            /* Light gray background */
+            color: #333;
+            /* Dark text color */
+            font-family: Arial, sans-serif;
+            /* Standard font */
             margin: 0;
             padding: 0;
+        }
+
+        header {
+            background-color: #007bff;
+            /* Blue background for header */
+            color: #fff;
+            /* White text color */
+            padding: 10px 0;
+            /* Vertical padding */
+        }
+
+        header nav {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+            /* Center align navigation links */
+        }
+
+        header nav a {
+            color: #fff;
+            /* White text color for links */
+            text-decoration: none;
+            margin: 0 15px;
+            /* Horizontal spacing between links */
+            font-size: 16px;
+        }
+
+        header nav a:hover {
+            text-decoration: underline;
+            /* Underline on hover */
+        }
+
+        footer {
+            background-color: #333;
+            /* Dark background for footer */
+            color: #fff;
+            /* White text color */
+            text-align: center;
+            /* Center align footer text */
+            padding: 10px 0;
+            /* Vertical padding */
+            position: relative;
+            /* Fixed at the bottom */
+            bottom: 0;
+            width: 100%;
         }
 
         .container {
             max-width: 800px;
             margin: 50px auto;
             padding: 40px;
-            background-color: #fff; /* White background for container */
-            border: 1px solid #ccc; /* Border */
+            background-color: #fff;
+            /* White background for container */
+            border: 1px solid #ccc;
+            /* Border */
             border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Shadow */
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            /* Shadow */
         }
 
         h1 {
@@ -35,7 +88,8 @@
         }
 
         a {
-            color: #007bff; /* Standard blue color for links */
+            color: #007bff;
+            /* Standard blue color for links */
             text-decoration: none;
         }
 
@@ -49,26 +103,38 @@
             margin-bottom: 20px;
         }
 
-        th, td {
+        th,
+        td {
             padding: 10px;
-            border-bottom: 1px solid #ddd; /* Light gray border */
+            border-bottom: 1px solid #ddd;
+            /* Light gray border */
             text-align: left;
         }
 
         th {
-            background-color: #f2f2f2; /* Light gray background for table header */
+            background-color: #f2f2f2;
+            /* Light gray background for table header */
             font-weight: normal;
         }
 
         /* Add any additional boring and official styling as needed */
     </style>
+    {% block additional_styles %}
+    {% endblock %}
 </head>
+
 <body>
     <header>
         <nav>
-            <a href="{{ url_for('main.index') }}">Home</a> |
-            <a href="{{ url_for('main.new') }}">New Release</a> |
-            <a href="{{ url_for('auth.login') }}">Login</a>
+            <a href="{{ url_for('main.index') }}">Etusivu</a> |
+            {% if current_user.is_authenticated %}
+                <a href="{{ url_for('main.new') }}">Luo uusi lehdistötiedote</a> |
+                <a href="{{ url_for('auth.logout') }}">Kirjaudu ulos</a>
+            {% else %}
+                <a href="{{ url_for('auth.login') }}">Kirjaudu sisään</a>|
+                <a href="{{ url_for('auth.register') }}">Rekisteröidy</a>
+
+            {% endif %}
         </nav>
     </header>
 
@@ -82,4 +148,5 @@
         <p>&copy; {{ current_year }} LuovaClub. Kaikki oikeudet pidätetään.</p>
     </footer>
 </body>
+
 </html>

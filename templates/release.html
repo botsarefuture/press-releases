@@ -3,31 +3,97 @@
 {% block title %}{{ release.title }}{% endblock %}
 
 {% block content %}
+<div class="hero">
     <h1>{{ release.title }}</h1>
-    <p><strong>Published:</strong> {{ release.publish_date }} | {{ release.organization }}</p>
-    {{ release.content | safe }}
+    <p class="hero-meta"><strong>Julkaistu:</strong> {{ release.publish_date }} | <strong>Julkaisija:</strong> {{ release.organization }}</p>
+</div>
 
-    <h2>Additional Information:</h2>
-    <table>
+<div class="release-container">
+    <div class="release-content">
+        {{ release.content | safe }}
+    </div>
+
+    <h2>Lisätiedot</h2>
+    <table class="info-table">
         <tr>
-            <th>Publisher (Organization)</th>
+            <th>Julkaisija (Organisaatio)</th>
             <td>{{ release.organization }}</td>
         </tr>
         <tr>
-            <th>Contact Person for Media</th>
-            <td>{{ release.contactName }}</td>
+            <th>Yhteyshenkilö tiedotusvälineille</th>
+            <td>{{ release.contact_name }}</td>
         </tr>
         <tr>
-            <th>Email</th>
-            <td>{{ release.contactEmail }}</td>
+            <th>Sähköposti</th>
+            <td>{{ release.contact_email }}</td>
         </tr>
         <tr>
-            <th>Phone Number</th>
-            <td>{{ release.contactPhone }}</td>
+            <th>Puhelinnumero</th>
+            <td>{{ release.contact_phone }}</td>
         </tr>
         <tr>
-            <th>Status</th>
+            <th>Tila</th>
             <td>{{ release.status }}</td>
         </tr>
     </table>
+</div>
+{% endblock %}
+{% block additional_styles %}
+<style>
+    .hero {
+        background: #007bff; /* Sininen tausta hero-osalle */
+        color: #fff; /* Valkoinen tekstiväri */
+        padding: 60px 20px;
+        text-align: center;
+        border-radius: 8px;
+        margin-bottom: 30px;
+    }
+
+    .hero h1 {
+        font-size: 2.5em;
+        margin-bottom: 10px;
+    }
+
+    .hero-meta {
+        font-size: 1.2em;
+        color: #d1e0e0; /* Vaaleanharmaa sävy meta-tiedoille */
+    }
+
+    .release-container {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+        background: #fff;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .release-content {
+        font-size: 1.1em;
+        line-height: 1.6;
+        margin-bottom: 30px;
+    }
+
+    .info-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+    }
+
+    .info-table th, .info-table td {
+        padding: 12px;
+        border-bottom: 1px solid #ddd;
+        text-align: left;
+    }
+
+    .info-table th {
+        background-color: #f2f2f2;
+        font-weight: bold;
+    }
+
+    .info-table td {
+        color: #555;
+    }
+</style>
 {% endblock %}

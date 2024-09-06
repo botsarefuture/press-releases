@@ -1,9 +1,102 @@
-{% extends "base.html" %}
+{% extends 'base.html' %}
 
-{% block title %}Rekisteröidy{% endblock %}
+{% block additional_styles %}
+<style>
+    .container {
+        max-width: 500px;
+        padding-bottom: 0px;
+    }
+    .hero {
+        background: #007bff; /* Sininen tausta hero-osioon */
+        color: #fff; /* Valkoinen teksti */
+        padding: 40px 20px;
+        text-align: center;
+        border-radius: 8px;
+        margin-bottom: 30px;
+    }
+
+    .hero h2 {
+        font-size: 2.5em;
+        margin-bottom: 10px;
+    }
+
+    .hero p {
+        font-size: 1.2em;
+    }
+
+    .auth-container {
+        max-width: 400px;
+        margin: 50px auto; /* Keskitetty */
+        padding: 20px;
+        background: #fff; /* Valkoinen tausta */
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        text-align: center;
+    }
+
+    .auth-container h1 {
+        font-size: 24px;
+        margin-bottom: 20px;
+        color: #333;
+    }
+
+    .form-group {
+        margin-bottom: 15px;
+    }
+
+    .form-group label {
+        display: block;
+        margin-bottom: 5px;
+        color: #333;
+    }
+
+    .form-group input {
+        width: 100%;
+        padding: 10px;
+        font-size: 16px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+    }
+
+    button[type="submit"] {
+        background-color: #4CAF50;
+        color: white;
+        padding: 12px 20px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 16px;
+        width: 100%;
+        margin-top: 10px;
+    }
+
+    button[type="submit"]:hover {
+        background-color: #45a049;
+    }
+
+    .forgot-password, .register-link {
+        margin-top: 10px;
+        font-size: 14px;
+    }
+
+    .forgot-password a, .register-link a {
+        color: #007bff; /* Sininen linkkien väri */
+        text-decoration: none;
+    }
+
+    .forgot-password a:hover, .register-link a:hover {
+        text-decoration: underline;
+    }
+</style>
+{% endblock %}
 
 {% block content %}
-<link rel="stylesheet" href="{{ url_for('static', filename='css/auth.css') }}">
+<div class="hero">
+    <h2>Rekisteröidy</h2>
+    <p>Rekisteröidy Pressi -palveluun, ja ala luomaan lehdistötiedotteita.</p>
+</div>
 
 <div class="auth-container">
     <h1>Rekisteröidy</h1>
@@ -28,5 +121,4 @@
 
     <p>Onko sinulla jo tili? <a href="{{ url_for('auth.login') }}">Kirjaudu sisään tästä</a>.</p>
 </div>
-
 {% endblock %}

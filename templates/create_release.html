@@ -3,140 +3,138 @@
 {% block title %}Lähetä lehdistötiedote{% endblock %}
 
 {% block additional_styles %}
-    <style>
-        .container {
-            width: 80%;
-            max-width: 800px;
-            margin: 50px auto;
-            background-color: #fff;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            padding: 30px;
-        }
-        h1 {
-            text-align: center;
-            color: #333;
-            margin-bottom: 30px;
-        }
-        .form-group {
-            margin-bottom: 20px;
-        }
-        .form-group label {
-            display: block;
-            margin-bottom: 5px;
-        }
-        .form-group input, .form-group textarea {
-            width: 100%;
-            padding: 10px;
-            font-size: 16px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            box-sizing: border-box;
-        }
-        button[type="submit"] {
-            background-color: #4CAF50;
-            color: white;
-            padding: 14px 20px;
-            margin: 8px 0;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            width: 100%;
-            font-size: 16px;
-        }
-        button[type="submit"]:hover {
-            background-color: #45a049;
-        }
-    </style>
+<style>
+    .hero {
+        background: #4CAF50; /* Vihreä tausta hero-osalle */
+        color: #fff; /* Valkoinen tekstiväri */
+        padding: 40px 20px;
+        text-align: center;
+        border-radius: 8px;
+        margin-bottom: 30px;
+    }
+
+    .hero h1 {
+        font-size: 2.5em;
+        margin-bottom: 10px;
+    }
+
+    .hero p {
+        font-size: 1.2em;
+        margin: 0;
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+    .form-group label {
+        display: block;
+        margin-bottom: 5px;
+    }
+
+    .form-group input,
+    .form-group textarea {
+        width: 100%;
+        padding: 10px;
+        font-size: 16px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+    }
+
+    button[type="submit"] {
+        background-color: #4CAF50;
+        color: white;
+        padding: 14px 20px;
+        margin: 8px 0;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        width: 100%;
+        font-size: 16px;
+    }
+
+    button[type="submit"]:hover {
+        background-color: #45a049;
+    }
+
+    .form-container {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+        background: #fff;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+</style>
 {% endblock %}
 
 {% block content %}
-    <div class="container">
-        <h1>Lähetä lehdistötiedote</h1>
-        <form id="createReleaseForm">
-            <div class="form-group">
-                <label for="releaseTitle">Otsikko</label>
-                <input type="text" id="releaseTitle" placeholder="Otsikko" required>
-            </div>
-            <div class="form-group">
-                <label for="releaseContent">Sisältö</label>
-                <!-- Replace textarea with div for CKEditor integration -->
-                <div id="releaseContent" contenteditable="true"></div>
-            </div>
-            <div class="form-group">
-                <label for="organization">Julkaisija (organisaatio)</label>
-                <input type="text" id="organization" placeholder="Organisaatio">
-            </div>
-            <div class="form-group">
-                <label for="contactName">Yhteyshenkilö tiedotusvälineille</label>
-                <input type="text" id="contactName" placeholder="Yhteyshenkilön nimi">
-            </div>
-            <div class="form-group">
-                <label for="contactEmail">Yhteydenottosähköposti</label>
-                <input type="email" id="contactEmail" placeholder="Sähköposti">
-            </div>
-            <div class="form-group">
-                <label for="contactPhone">Yhteydenottopuhelinnumero</label>
-                <input type="tel" id="contactPhone" placeholder="Puhelinnumero">
-            </div>
-            <div class="form-group">
-                <label>Tila</label><br>
-                <input checked type="radio" id="immediate" name="status" value="Heti julkaistavissa">
-                <label for="immediate">Heti julkaistavissa</label>
-            </div>
-            <button type="submit">Lähetä tiedote</button>
-        </form>
-    </div>
+<div class="hero">
+    <h1>Täytä lomake</h1>
+    <p>Anna lehdistötiedotteen tiedot ja lähetä se</p>
+</div>
 
-    <script src="https://cdn.ckeditor.com/ckeditor5/41.1.0/classic/ckeditor.js"></script>
-    <script>
-        // Initialize CKEditor
-        ClassicEditor
-            .create(document.querySelector('#releaseContent'))
-            .catch(error => {
-                console.error(error);
-            });
+<div class="form-container">
+    <form id="createReleaseForm" method="POST" action="{{ url_for('main.new') }}">
+        <div class="form-group">
+            <label for="releaseTitle">Otsikko</label>
+            <input type="text" id="releaseTitle" name="title" placeholder="Otsikko" required>
+        </div>
+        <div class="form-group">
+            <label for="releaseContent">Sisältö</label>
+            <!-- Hidden input to store CKEditor content -->
+            <input type="hidden" id="releaseContentHidden" name="content" />
+            <!-- Contenteditable div for CKEditor integration -->
+            <div id="releaseContent" contenteditable="true"></div>
+        </div>
+        <div class="form-group">
+            <label for="organization">Julkaisija (organisaatio)</label>
+            <input type="text" id="organization" name="organization" placeholder="Organisaatio">
+        </div>
+        <div class="form-group">
+            <label for="contactName">Yhteyshenkilö tiedotusvälineille</label>
+            <input type="text" id="contactName" name="contact_name" placeholder="Yhteyshenkilön nimi">
+        </div>
+        <div class="form-group">
+            <label for="contactEmail">Yhteydenottosähköposti</label>
+            <input type="email" id="contactEmail" name="contact_email" placeholder="Sähköposti">
+        </div>
+        <div class="form-group">
+            <label for="contactPhone">Yhteydenottopuhelinnumero</label>
+            <input type="tel" id="contactPhone" name="contact_phone" placeholder="Puhelinnumero">
+        </div>
+        <div class="form-group">
+            <label>Tila</label><br>
+            <input checked type="radio" id="immediate" name="status" value="Heti julkaistavissa">
+            <label for="immediate">Heti julkaistavissa</label>
+        </div>
+        <button type="submit">Lähetä tiedote</button>
+    </form>
+</div>
 
-        document.addEventListener("DOMContentLoaded", function () {
-            const createReleaseForm = document.getElementById("createReleaseForm");
-            // Event listener for submitting the add release form
-            createReleaseForm.addEventListener("submit", function (event) {
-                event.preventDefault();
-
-                // Get release details from form inputs
-                const title = document.getElementById("releaseTitle").value;
-                const content = document.querySelector("#releaseContent").innerHTML;
-                const organization = document.getElementById("organization").value;
-                const contactName = document.getElementById("contactName").value;
-                const contactEmail = document.getElementById("contactEmail").value;
-                const contactPhone = document.getElementById("contactPhone").value;
-                const status = document.querySelector('input[name="status"]:checked').value;
-
-                // Send POST request to add new release
-                fetch("/new-release", {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
-                    body: JSON.stringify({ title, content, organization, contactName, contactEmail, contactPhone, status })
-                })
-                    .then(response => {
-                        if (response.ok) {
-                            alert("Lehdistötiedote lisätty onnistuneesti.");
-                            // Clear form inputs
-                            document.getElementById("releaseTitle").value = "";
-                            document.querySelector("#releaseContent").innerHTML = "";
-                            document.getElementById("organization").value = "";
-                            document.getElementById("contactName").value = "";
-                            document.getElementById("contactEmail").value = "";
-                            document.getElementById("contactPhone").value = "";
-                            document.getElementById("immediate").checked = true;
-                        } else {
-                            alert("Virhe lehdistötiedotteen lisäämisessä. Yritä uudelleen.");
-                        }
-                    })
-                    .catch(error => console.error('Error adding new release:', error));
-            });
+<script src="https://cdn.ckeditor.com/ckeditor5/41.1.0/classic/ckeditor.js"></script>
+<script>
+    // Initialize CKEditor
+    let editor;
+    ClassicEditor
+        .create(document.querySelector('#releaseContent'))
+        .then(newEditor => {
+            editor = newEditor;
+        })
+        .catch(error => {
+            console.error(error);
         });
-    </script>
+
+    document.addEventListener("DOMContentLoaded", function () {
+        const createReleaseForm = document.getElementById("createReleaseForm");
+        // Event listener for submitting the form
+        createReleaseForm.addEventListener("submit", function () {
+            // Set hidden input value to the editor's data
+            const data = editor.getData();
+            document.getElementById('releaseContentHidden').value = data;
+        });
+    });
+</script>
 {% endblock %}
