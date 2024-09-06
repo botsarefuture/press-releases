@@ -11,6 +11,7 @@ from bson.objectid import ObjectId
 from auth.models import User
 from auth.routes import auth_bp
 
+
 def create_app():
     email_sender = EmailSender()
 
@@ -39,7 +40,6 @@ def create_app():
             return User.from_db(user_doc)
         return None
 
-
     # Register blueprints
     app.register_blueprint(api, url_prefix="/api")
     app.register_blueprint(main)
@@ -48,6 +48,7 @@ def create_app():
     # Enable CORS for the entire app
     CORS(app, origins="*")
     return app
+
 
 if __name__ == "__main__":
     app = create_app()

@@ -33,7 +33,7 @@ def load_json_with_escape(filename: str) -> List[Dict[str, Union[str, dict]]]:
                     )
     except IOError as e:
         print(f"Error reading file {filename}: {e}")
-    
+
     return data
 
 

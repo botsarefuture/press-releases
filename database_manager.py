@@ -1,5 +1,7 @@
 from pymongo import MongoClient
 from config import Config
+
+
 class DatabaseManager:
     def __init__(self):
         self.client = None

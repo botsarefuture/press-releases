@@ -3,6 +3,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from typing import Optional, Dict, Union
 from bson.objectid import ObjectId
 
+
 class User(UserMixin):
     def __init__(
         self,
@@ -21,7 +22,7 @@ class User(UserMixin):
         self.confirmed = confirmed
 
     @staticmethod
-    def from_db(user_doc: Dict) -> 'User':
+    def from_db(user_doc: Dict) -> "User":
         """
         Create a User instance from a database document.
         """

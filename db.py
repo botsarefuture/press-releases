@@ -4,6 +4,7 @@ from werkzeug.security import check_password_hash, generate_password_hash
 from typing import Dict, Optional, Any, List
 from database_manager import DatabaseManager
 
+
 class PressReleaseDatabase:
     def __init__(self):
         self.db_manager = DatabaseManager()
@@ -52,12 +53,10 @@ class PressReleaseDatabase:
         Save a new user to the database with a hashed password.
         """
         try:
-            hashed_password = generate_password_hash(password, method='sha256')
-            self.users_collection.insert_one({
-                "username": username,
-                "password": hashed_password,
-                "email": email
-            })
+            hashed_password = generate_password_hash(password, method="sha256")
+            self.users_collection.insert_one(
+                {"username": username, "password": hashed_password, "email": email}
+            )
             return True
         except Exception as e:
             print(f"Error saving user to database: {e}")
