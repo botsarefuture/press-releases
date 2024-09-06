@@ -13,18 +13,10 @@ PRDB = PressReleaseDatabase()
 # Initialize EmailSender
 email_sender = EmailSender()
 
+def get_pressers(PRDB):
+    return list(PRDB.db.press.find({"unsubscribed": False}))
 
-# Load email addresses from a file
-def load_pressers(file_path: str) -> List[str]:
-    try:
-        with open(file_path, "r") as f:
-            pressers = f.read().strip().split(",")
-            return [email.strip() for email in pressers if email.strip()]
-    except IOError:
-        return []
-
-
-pressers = load_pressers("press.txt") or ["vuoreol@gmail.com"]
+pressers = get_pressers(PRDB)
 
 
 @api.route("/login", methods=["POST"])
