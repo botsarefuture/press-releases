@@ -13,8 +13,10 @@ PRDB = PressReleaseDatabase()
 # Initialize EmailSender
 email_sender = EmailSender()
 
+
 def get_pressers(PRDB):
     return list(PRDB.db.press.find({"unsubscribed": False}))
+
 
 pressers = get_pressers(PRDB)
 
