@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ subject }}</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 20px;
+        }
+        .header {
+            background-color: #f4f4f4;
+            padding: 10px;
+            text-align: center;
+        }
+        .content {
+            margin: 20px 0;
+        }
+        .footer {
+            font-size: 0.8em;
+            text-align: center;
+            color: #777;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>{{ title }}</h1>
+        <p>Published on {{ publish_date }}</p>
+    </div>
+    <div class="content">
+        <p>{{ content }}</p>
+        <p>Contact Name: {{ contact_name }}</p>
+        <p>Contact Email: {{ contact_email }}</p>
+        <p>Contact Phone: {{ contact_phone }}</p>
+    </div>
+    <div class="footer">
+        <p>Thank you for subscribing to our press release service.</p>
+        <p>&copy; {{ current_year }} Your Company Name</p>
+    </div>
+</body>
+</html>

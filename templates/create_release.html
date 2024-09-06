@@ -1,20 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lähetä lehdistötiedote</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
-    <!-- Include CKEditor script -->
-    <script src="https://cdn.ckeditor.com/ckeditor5/41.1.0/classic/ckeditor.js"></script>
+{% extends "base.html" %}
+
+{% block title %}Lähetä lehdistötiedote{% endblock %}
+
+{% block additional_styles %}
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
         .container {
             width: 80%;
             max-width: 800px;
@@ -59,8 +48,9 @@
             background-color: #45a049;
         }
     </style>
-</head>
-<body>
+{% endblock %}
+
+{% block content %}
     <div class="container">
         <h1>Lähetä lehdistötiedote</h1>
         <form id="createReleaseForm">
@@ -98,6 +88,7 @@
         </form>
     </div>
 
+    <script src="https://cdn.ckeditor.com/ckeditor5/41.1.0/classic/ckeditor.js"></script>
     <script>
         // Initialize CKEditor
         ClassicEditor
@@ -114,7 +105,7 @@
 
                 // Get release details from form inputs
                 const title = document.getElementById("releaseTitle").value;
-                const content = document.querySelector("#createReleaseForm > div:nth-child(2) > div > div.ck.ck-editor__main > div").innerHTML;
+                const content = document.querySelector("#releaseContent").innerHTML;
                 const organization = document.getElementById("organization").value;
                 const contactName = document.getElementById("contactName").value;
                 const contactEmail = document.getElementById("contactEmail").value;
@@ -122,7 +113,7 @@
                 const status = document.querySelector('input[name="status"]:checked').value;
 
                 // Send POST request to add new release
-                fetch("/api/new-release", {
+                fetch("/new-release", {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json"
@@ -134,7 +125,7 @@
                             alert("Lehdistötiedote lisätty onnistuneesti.");
                             // Clear form inputs
                             document.getElementById("releaseTitle").value = "";
-                            document.getElementById("releaseContent").innerHTML = "";
+                            document.querySelector("#releaseContent").innerHTML = "";
                             document.getElementById("organization").value = "";
                             document.getElementById("contactName").value = "";
                             document.getElementById("contactEmail").value = "";
@@ -148,5 +139,4 @@
             });
         });
     </script>
-</body>
-</html>
+{% endblock %}

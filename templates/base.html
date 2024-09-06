@@ -3,9 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ release.title }}</title>
+    <title>{% block title %}Lehdistötiedotteet{% endblock %}</title>
     <style>
-        /* Additional styles for the release view */
         body {
             background-color: #f5f5f5; /* Light gray background */
             color: #333; /* Dark text color */
@@ -65,34 +64,22 @@
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>{{ release.title }}</h1>
-        <p><strong>Julkaistu:</strong> {{ release.publish_date }} | {{ release.organization }}</p>
-        {{ release.content | safe }}
+    <header>
+        <nav>
+            <a href="{{ url_for('main.index') }}">Home</a> |
+            <a href="{{ url_for('main.new') }}">New Release</a> |
+            <a href="{{ url_for('auth.login') }}">Login</a>
+        </nav>
+    </header>
 
-        <h2>Lisätiedot:</h2>
-        <table>
-            <tr>
-                <th>Julkaisija (organisaatio)</th>
-                <td>{{ release.organization }}</td>
-            </tr>
-            <tr>
-                <th>Yhteyshenkilö tiedotusvälineille</th>
-                <td>{{ release.contactName }}</td>
-            </tr>
-            <tr>
-                <th>Sähköposti</th>
-                <td>{{ release.contactEmail }}</td>
-            </tr>
-            <tr>
-                <th>Puhelinnumero</th>
-                <td>{{ release.contactPhone }}</td>
-            </tr>
-            <tr>
-                <th>Julkaisutila</th>
-                <td>{{ release.status }}</td>
-            </tr>
-        </table>
-    </div>
+    <main>
+        <div class="container">
+            {% block content %}{% endblock %}
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; {{ current_year }} LuovaClub. Kaikki oikeudet pidätetään.</p>
+    </footer>
 </body>
 </html>

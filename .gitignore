@@ -1,2 +1,4 @@
-*/config.json
-backend/config.json
+config.json
+_pycache**
+config.yaml
+config.yaml

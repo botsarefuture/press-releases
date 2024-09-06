@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block title %}Home - Lehdistötiedotteet{% endblock %}
+
+{% block content %}
+<h2>Welcome to the Press Release Portal</h2>
+<p>Here you can find the latest press releases and updates.</p>
+
+<section>
+    <h3>Latest Press Releases</h3>
+    {% if press_releases %}
+        <ul>
+            {% for release in press_releases %}
+                <li>
+                    <h4><a href="{{ url_for('release', id=release['_id']) }}">{{ release['title'] }}</a></h4>
+                    <p>{{ release['review'] }} <a href="{{ url_for('release', id=release['_id']) }}">Read more</a></p>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No press releases available at the moment.</p>
+    {% endif %}
+</section>
+{% endblock %}

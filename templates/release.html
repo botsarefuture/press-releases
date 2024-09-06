@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block title %}{{ release.title }}{% endblock %}
+
+{% block content %}
+    <h1>{{ release.title }}</h1>
+    <p><strong>Published:</strong> {{ release.publish_date }} | {{ release.organization }}</p>
+    {{ release.content | safe }}
+
+    <h2>Additional Information:</h2>
+    <table>
+        <tr>
+            <th>Publisher (Organization)</th>
+            <td>{{ release.organization }}</td>
+        </tr>
+        <tr>
+            <th>Contact Person for Media</th>
+            <td>{{ release.contactName }}</td>
+        </tr>
+        <tr>
+            <th>Email</th>
+            <td>{{ release.contactEmail }}</td>
+        </tr>
+        <tr>
+            <th>Phone Number</th>
+            <td>{{ release.contactPhone }}</td>
+        </tr>
+        <tr>
+            <th>Status</th>
+            <td>{{ release.status }}</td>
+        </tr>
+    </table>
+{% endblock %}

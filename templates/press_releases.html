@@ -1,13 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends "base.html" %}
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lehdistötiedotteet</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+{% block title %}Lehdistötiedotteet{% endblock %}
+
+{% block additional_styles %}
     <style>
-        /* Additional styles for press releases */
         .container {
             max-width: 800px;
             margin: 0 auto;
@@ -55,26 +51,24 @@
             color: inherit; /* Inherit color from parent */
         }
     </style>
-</head>
+{% endblock %}
 
-<body>
+{% block content %}
     <div class="container">
         <h1>Lehdistötiedotteet</h1>
         <div class="carousel-container" id="pressReleases">
             {% if press_releases %}
-            {% for release in press_releases %}
-            <a href="{{ url_for('release', id= release._id ) }}" class="press-release">
-                <div>
-                    <h2>{{ release.title }}</h2>
-                    <p>{{ release.review | safe }}</p>
-                </div>
-            </a>
-            {% endfor %}
+                {% for release in press_releases %}
+                <a href="{{ url_for('release', id=release._id) }}" class="press-release">
+                    <div>
+                        <h2>{{ release.title }}</h2>
+                        <p>{{ release.review | safe }}</p>
+                    </div>
+                </a>
+                {% endfor %}
             {% else %}
-            <p>No press releases available.</p>
+                <p>No press releases available.</p>
             {% endif %}
         </div>
     </div>
-</body>
-
-</html>
+{% endblock %}
